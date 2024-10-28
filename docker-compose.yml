@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: your_username
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: your_database
+    ports:
+      - "5432:5432"
+  backstage:
+    build: .
+    ports:
+      - "7007:7007"
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: backstage_db
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: backstage_plugin_app
+    depends_on:
+      - db
